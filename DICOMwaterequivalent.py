@@ -133,6 +133,6 @@ if __name__ == "__main__":
 
     # cv2.imwrite('out.png', result[6])    # to write numpy image as file
     print(result[0:5])                     # results[0:5] = (Aw, Dw, Ap, Dp, Aph, Dph)
-    cv2.imshow('dicomDIAMETER', result[6]) # results[6] = numpy image, press any key in graphical window to close
+    cv2.imshow('DICOMwaterequivalent', result[6]) # results[6] = numpy image, press any key in graphical window to close
     cv2.waitKey(0)
     cv2.destroyAllWindows()
