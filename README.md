@@ -6,37 +6,6 @@ cv2, numpy, pydicom
 
     $ pip3 install opencv-python numpy pydicom
 
-## Standalone use
-### Usage
-
-    ./DICOMwaterequivalent.py <filename> <threshold>
-
-* filename:  DICOM file
-* threshold: ROI contour threshold level
-
-### Output
-##### console
-```
-(
-	water equivalent area (Aw) in mm² (float),
-	water equivalent diameter (Dw) in mm (float),
-	ROI area in mm² (float),
-	ROI equivalent circle diameter in mm (a circle with ROI area) (float),
-	ROI hull area in mm² (float),
-	ROI hull equivalent circle diameter in mm (float)
-)
-```
-
-##### graphical
-result image displaying ROI and ROI hull contours
-
-### Example
-
-    $ ./DICOMwaterequivalent.py image-1001.dcm -250
-    (24740.231323242188, 177.48307205659782, 27518.49097592727, 187.18341518945613, 25731.055450439453, 181.0022025481258)
-<img align="left" src="screenshot.png" />
-<br clear="all" />
-
 ## Python function
 ### Usage
 
@@ -71,3 +40,35 @@ Tuple containing:
       array([[[0, 0, 0], ... ]]], dtype=uint8))
     )
     >>> cv2.imwrite('out.png', equiv[6])
+
+## Standalone use
+### Usage
+
+    ./DICOMwaterequivalent.py <filename> <threshold>
+
+* filename:  DICOM file
+* threshold: ROI contour threshold level
+
+### Output
+##### console
+```
+(
+	water equivalent area (Aw) in mm² (float),
+	water equivalent diameter (Dw) in mm (float),
+	ROI area in mm² (float),
+	ROI equivalent circle diameter in mm (a circle with ROI area) (float),
+	ROI hull area in mm² (float),
+	ROI hull equivalent circle diameter in mm (float)
+)
+```
+
+##### graphical
+result image displaying ROI and ROI hull contours
+
+### Example
+
+    $ ./DICOMwaterequivalent.py image-1001.dcm -250
+    (24740.231323242188, 177.48307205659782, 27518.49097592727, 187.18341518945613, 25731.055450439453, 181.0022025481258)
+<img align="left" src="screenshot.png" />
+<br clear="all" />
+
