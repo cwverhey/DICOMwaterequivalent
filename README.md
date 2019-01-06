@@ -1,5 +1,5 @@
 # DICOMwaterequivalent
-Python script to calculate water equivalent area (Aw) and water equivalent circle diameter (Dw) for CT DICOM images, as proposed by AAPM Task Group 220 for calculating patient size for size-specific dose estimates (SSDE) in CT. Can be used as a standalone script or included as a function.
+Python script to calculate water equivalent area (Aw) and water equivalent circle diameter (Dw) for 16 bit CT DICOM images, as proposed by AAPM Task Group 220 for calculating patient size for size-specific dose estimates (SSDE) in CT. Can be used as a standalone script or included as a function.
 
 ## Requirements
 cv2, numpy, pydicom
@@ -71,4 +71,4 @@ result image displaying ROI and ROI hull contours
     (24740.231323242188, 177.48307205659782, 27518.49097592727, 187.18341518945613, 25731.055450439453, 181.0022025481258)
 <img align="left" src="screenshot.png" />
 <br clear="all" />
-
+* Example source image courtesy of Patient Contributed Image Repository patient 54879843, available from http://www.pcir.org/researchers/downloads_available.html
