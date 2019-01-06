@@ -118,7 +118,7 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
     else:
         view_img = False
 
-    return( (area, equiv_circle_diam, water_equiv_area, water_equiv_circle_diam, hullarea, hullequiv, view_img) )
+    return( area, equiv_circle_diam, water_equiv_area, water_equiv_circle_diam, hullarea, hullequiv, view_img )
 
 if __name__ == "__main__":
 
