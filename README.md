@@ -3,6 +3,7 @@ Python script to calculate water equivalent area (Aw) and water equivalent circl
 
 ## Requirements
 cv2, numpy, pydicom
+
 `pip3 install opencv-python numpy pydicom`
 
 ## Standalone
