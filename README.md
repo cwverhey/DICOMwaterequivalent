@@ -15,7 +15,7 @@ cv2, numpy, pydicom
 * threshold: ROI contour threshold level
 
 ### Output
-console:
+##### console
 ```
 (
 	water equivalent area (Aw) in mm² (float),
@@ -27,10 +27,8 @@ console:
 )
 ```
 
-graphical:
-
+##### graphical
 result image displaying ROI and ROI hull contours
-
 
 ### Example
 
