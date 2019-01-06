@@ -1,21 +1,22 @@
 # DICOMwaterequivalent
-Python script to calculate water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_) and effective diameter, for 16 bit CT DICOM images, as proposed by AAPM Task Groups 204 and 220 for calculating patient size for size-specific dose estimates (SSDE) in CT. Reported _A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation, while effective diameter only describes the patient geometry (note that AAPM Report 204 reports _D<sub>w</sub>_ as 'effective diameter', as clarified in Report 220).
-
-SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the phantom used for CTDI<sub>vol</sub> estimation.
-
-> For 32 cm phantoms:
-> 
-> 	conversion factor = 3.704369 * e^(-0.03671937*Dw)
->
-> For 16 cm phantoms:
-> 
-> 	conversion factor = 1.874799 * e^(-0.03871313*Dw)
-> 
-> _(source: AAPM Report 204)_
+Python script to calculate water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_) and effective diameter, for 16 bit CT DICOM images, as proposed by AAPM Task Groups 204 and 220 for calculating patient size for size-specific dose estimates (SSDE) in CT. _A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation, while effective diameter only describes the patient geometry.
 
 This script can be used as a standalone script or included as a function.
 
-> N.b.: visually inspect the output image for correct ROI placement. The ROI should be a tight fit around the entire patient and not include any air, CT table, clothing, implants, ECG leads etc. ROI fit is influenced by the specified ROI contour threshold. Exclusion of implants is not (yet) possible with this script. <TODO: link to article discussing suitable threshold range> 
+> **N.b.**: visually inspect the output image for correct ROI placement. The ROI should be a tight fit around the entire patient and not include any air, CT table, clothing, implants, ECG leads etc. ROI fit is influenced by the specified ROI contour threshold. Exclusion of implants is not (yet) possible with this script. <TODO: link to article discussing suitable threshold range> 
+
+### SSDE factors
+SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the phantom used for CTDI<sub>vol</sub> estimation:
+
+> For 32 cm phantoms
+> 
+>     conversion factor = 3.704369 * e^(-0.03671937*Dw)
+>
+> For 16 cm phantoms
+> 
+>     conversion factor = 1.874799 * e^(-0.03871313*Dw)
+> 
+> _(Source: AAPM Report 204. Note that it reports _D<sub>w</sub>_ as 'effective diameter', as clarified in Report 220)_
 
 ## Requirements
 cv2, numpy, pydicom
