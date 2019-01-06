@@ -45,18 +45,20 @@ Tuple containing:
 
 ### Example
 
-    >>> import DICOMwaterequivalent
-    >>> equiv = DICOMwaterequivalent('480.0.dcm', -250, (1000,40))
-    >>> print(equiv)
-    ( 24740.231323242188, 
-      177.48307205659782, 
-      27518.49097592727,
-      187.18341518945613,
-      25731.055450439453,
-      181.0022025481258,
-      array([[[0, 0, 0], ... ]]], dtype=uint8))
-    )
-    >>> cv2.imwrite('out.png', equiv[6])
+```python
+>>> import DICOMwaterequivalent
+>>> equiv = DICOMwaterequivalent('480.0.dcm', -250, (1000,40))
+>>> print(equiv)
+( 24740.231323242188, 
+  177.48307205659782, 
+  27518.49097592727,
+  187.18341518945613,
+  25731.055450439453,
+  181.0022025481258,
+  array([[[0, 0, 0], ... ]]], dtype=uint8))
+)
+>>> cv2.imwrite('out.png', equiv[6])
+```
 
 ## Standalone use
 ### Usage
