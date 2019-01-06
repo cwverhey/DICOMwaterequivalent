@@ -5,7 +5,7 @@ This script can be used as a standalone script or included as a function.
 
 > **N.b.**: visually inspect the output image for correct ROI placement. The ROI should be a tight fit around the entire patient and not include any air, CT table, clothing, implants, ECG leads etc. ROI fit is influenced by the specified ROI contour threshold. Exclusion of implants is not (yet) possible with this script. <TODO: link to article discussing suitable threshold range> 
 
-### SSDE factors
+#### SSDE factors
 SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the phantom used for CTDI<sub>vol</sub> estimation:
 
 > For 32 cm phantoms
