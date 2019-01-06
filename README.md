@@ -39,6 +39,7 @@ result image displaying ROI and ROI hull contours (numpy array)
 
 <img align="left" src="screenshot.png" />
 <br clear="all" />
+
 ## Python function
 ### Usage
 
