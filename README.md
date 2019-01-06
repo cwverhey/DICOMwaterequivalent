@@ -4,15 +4,12 @@ Python script to calculate water equivalent area (Aw) and water equivalent circl
 ## Requirements
 cv2, numpy, pydicom
 
-`pip3 install opencv-python numpy pydicom`
+    $ pip3 install opencv-python numpy pydicom
 
 ## Standalone
 ### Usage
-`./DICOMwaterequivalent.py <filename> <threshold>`
 
-example:
-
-`$ ./DICOMwaterequivalent.py image-1001.dcm -250`
+    ./DICOMwaterequivalent.py <filename> <threshold>
 
 * filename:  DICOM file
 * threshold: ROI contour threshold level
@@ -30,13 +27,15 @@ console:
 )
 ```
 
-example:
-
-`(24740.231323242188, 177.48307205659782, 27518.49097592727, 187.18341518945613, 25731.055450439453, 181.0022025481258)`
-	
 graphical:
-result image displaying ROI and ROI hull contours (numpy array)
 
+result image displaying ROI and ROI hull contours
+
+
+### Example
+
+    $ ./DICOMwaterequivalent.py image-1001.dcm -250
+    (24740.231323242188, 177.48307205659782, 27518.49097592727, 187.18341518945613, 25731.055450439453, 181.0022025481258)
 <img align="left" src="screenshot.png" />
 <br clear="all" />
 
@@ -45,10 +44,6 @@ result image displaying ROI and ROI hull contours (numpy array)
 
     >>> import DICOMwaterequivalent
     >>> DICOMwaterequivalent(filename, threshold, window)
-
-example:
-
-    DICOMwaterequivalent('in.dcm', -350, (1000,40))
 
 * filename:  DICOM file,
 * threshold: ROI contour threshold level,
@@ -64,14 +59,17 @@ Tuple containing:
 6.  ROI hull equivalent circle diameter in mm (float),
 7.  result image displaying ROI and ROI hull contours (numpy array).
 
-  example:
-```
- ( 24740.231323242188, 
-   177.48307205659782, 
-   27518.49097592727,
-   187.18341518945613,
-   25731.055450439453,
-   181.0022025481258,
-   array([[[0, 0, 0], ... ]]], dtype=uint8))
- )
-```
+### Example
+
+    >>> import DICOMwaterequivalent
+    >>> equiv = DICOMwaterequivalent('in.dcm', -350, (1000,40))
+    >>> print(equiv)
+    ( 24740.231323242188, 
+      177.48307205659782, 
+      27518.49097592727,
+      187.18341518945613,
+      25731.055450439453,
+      181.0022025481258,
+      array([[[0, 0, 0], ... ]]], dtype=uint8))
+    )
+    >>> cv2.imwrite('out.png', result[6])
