@@ -6,7 +6,7 @@ cv2, numpy, pydicom
 
     $ pip3 install opencv-python numpy pydicom
 
-## Standalone
+## Standalone use
 ### Usage
 
     ./DICOMwaterequivalent.py <filename> <threshold>
@@ -72,4 +72,4 @@ Tuple containing:
       181.0022025481258,
       array([[[0, 0, 0], ... ]]], dtype=uint8))
     )
-    >>> cv2.imwrite('out.png', result[6])
+    >>> cv2.imwrite('out.png', equiv[6])
