@@ -3,7 +3,7 @@ Python script to calculate water equivalent area (_A<sub>w</sub>_), water equiva
 
 This script can be used as a standalone script or included as a function.
 
-> :warning: **N.b.**: visually inspect the output image for correct ROI placement. The ROI should be a tight fit around the entire patient and not include any air, CT table, clothing, implants, ECG leads etc. ROI fit is influenced by the specified ROI contour threshold. Exclusion of implants is not (yet) possible with this script. <TODO: link to article discussing suitable threshold range> 
+> :warning: Always check the output image for correct ROI placement. The ROI is automatically placed on the largest contour with HUs above the set ROI threshold. Confirm that the patient contour is in the center of the displayed ROI outline, and that the ROI does not include any air, CT table, clothing, implants, ECG leads etc. Exclusion of implants is not (yet) possible with this script. <TODO: link to article discussing suitable threshold range> 
 
 ## Requirements
 cv2, numpy, pydicom
@@ -84,15 +84,15 @@ image displaying ROI and ROI hull contours
 ### SSDE factors
 SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the phantom used for CTDI<sub>vol</sub> estimation:
 
-> For 32 cm phantoms
+> For 32 cm phantoms:
 > 
 >     conversion factor = 3.704369 * e^(-0.03671937*Dw)
 >
-> For 16 cm phantoms
+> For 16 cm phantoms:
 > 
 >     conversion factor = 1.874799 * e^(-0.03871313*Dw)
 > 
-> _(Source: AAPM Report 204. Note that it reports _D<sub>w</sub>_ as 'effective diameter', as clarified in Report 220)_
+> _(Source: AAPM Report 204. Note that Report 220 recommends to use _D<sub>w</sub>_ instead of effective diameter, as mentioned in Report 220 Appendix A)_
 
 ### External links
 McCollough C, Bakalyar DM, Bostani M, Brady S, Boedeker K, Boone JM, Chen-Mayer HH, Christianson OI, Leng S, Li B, McNitt-Gray MF. [Use of water equivalent diameter for calculating patient size and size-specific dose estimates (SSDE) in CT: The Report of AAPM Task Group 220.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4991550/) AAPM report. 2014 Sep;2014:6.
