@@ -14,8 +14,8 @@ cv2, numpy, pydicom
 ### Usage
 
 ```python
-    >>> import DICOMwaterequivalent
-    >>> DICOMwaterequivalent(filename, threshold, window)
+>>> import DICOMwaterequivalent
+>>> DICOMwaterequivalent(filename, threshold, window)
 ```
 
 * filename:  DICOM file,
