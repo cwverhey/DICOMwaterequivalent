@@ -13,8 +13,10 @@ cv2, numpy, pydicom
 ## Python function
 ### Usage
 
+```python
     >>> import DICOMwaterequivalent
     >>> DICOMwaterequivalent(filename, threshold, window)
+```
 
 * filename:  DICOM file,
 * threshold: ROI contour threshold level in HU,
