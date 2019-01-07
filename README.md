@@ -5,6 +5,8 @@ This script can be used as a standalone script or included as a function.
 
 > :warning: Always check the output image for correct ROI placement. The ROI is automatically placed on the largest contour with HUs above the set ROI threshold. Confirm that the patient contour is in the center of the displayed ROI outline, and that the ROI does not include any air, CT table, clothing, implants, ECG leads etc. Exclusion of implants is not (yet) possible with this script.
 
+> :warning: This software has not (yet) been peer reviewed and should not be used without adequate professional judgment. Please read the license for further disclaimers.
+
 ## Requirements
 cv2, numpy, pydicom
 
