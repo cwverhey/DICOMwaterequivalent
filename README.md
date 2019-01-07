@@ -94,7 +94,7 @@ SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the 
 > 
 >     conversion factor = 1.874799 * e^(-0.003871313*Dw)
 > 
-> _(Derived from the formulae with <sub>Dw</sub> in cm in AAPM Report 204. Note that Report 220 Appendix A recommends to use _D<sub>w</sub>_ even though Report 204 uses effective diameter)_
+> _(Derived from the formulae with D<sub>w</sub> in cm in AAPM Report 204. Note that Report 220 Appendix A recommends to use _D<sub>w</sub>_ even though Report 204 uses effective diameter)_
 
 
 ### External links
