@@ -3,7 +3,7 @@ Python script to calculate water equivalent area (_A<sub>w</sub>_), water equiva
 
 This script can be used as a standalone script or included as a function.
 
-> :warning: Always check the output image for correct ROI placement. The ROI is automatically placed on the largest contour with HUs above the set ROI threshold. Confirm that the patient contour is in the center of the displayed ROI outline, and that the ROI does not include any air, CT table, clothing, implants, ECG leads etc. Exclusion of implants is not (yet) possible with this script. <TODO: link to article discussing suitable threshold range> 
+> :warning: Always check the output image for correct ROI placement. The ROI is automatically placed on the largest contour with HUs above the set ROI threshold. Confirm that the patient contour is in the center of the displayed ROI outline, and that the ROI does not include any air, CT table, clothing, implants, ECG leads etc. Exclusion of implants is not (yet) possible with this script.
 
 ## Requirements
 cv2, numpy, pydicom
@@ -98,6 +98,8 @@ SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the 
 
 
 ### External links
-McCollough C, Bakalyar DM, Bostani M, Brady S, Boedeker K, Boone JM, Chen-Mayer HH, Christianson OI, Leng S, Li B, McNitt-Gray MF. [Use of water equivalent diameter for calculating patient size and size-specific dose estimates (SSDE) in CT: The Report of AAPM Task Group 220.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4991550/) AAPM report. 2014 Sep;2014:6.
+McCollough C, Bakalyar DM, Bostani M, Brady S, Boedeker K, Boone JM, Chen-Mayer HH, Christianson OI, Leng S, Li B, McNitt-Gray MF. [Use of water equivalent diameter for calculating patient size and size-specific dose estimates (SSDE) in CT: The Report of AAPM Task Group 220](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4991550/). AAPM report. 2014 Sep;2014:6.
 
-Boone JM, Strauss KJ, Cody DD, McCollough CH, McNitt‐Gray MF, Toth TL. [Size‐Specific Dose Estimates (SSDE) in Pediatric and Adult Body CT Examination.](https://www.aapm.org/pubs/reports/rpt_204.pdf) College Park, MD: American Association of Physicists in Medicine; 2011.
+Boone JM, Strauss KJ, Cody DD, McCollough CH, McNitt‐Gray MF, Toth TL. [Size‐Specific Dose Estimates (SSDE) in Pediatric and Adult Body CT Examinations: Report of AAPM Task Group 204 ...](https://www.aapm.org/pubs/reports/rpt_204.pdf). College Park, MD: American Association of Physicists in Medicine; 2011.
+
+Cheng PM. [Automated estimation of abdominal effective diameter for body size normalization of CT dose](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3649058/). Journal of digital imaging. 2013 Jun 1;26(3):406-11.
