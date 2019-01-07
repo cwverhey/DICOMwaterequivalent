@@ -84,17 +84,18 @@ image displaying ROI and ROI hull contours
 ## More information
 
 ### SSDE factors
-SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the phantom used for CTDI<sub>vol</sub> estimation:
+SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the phantom used for CTDI<sub>vol</sub> estimation. The following formulae are for _D<sub>w</sub>_ in mm:
 
 > For 32 cm phantoms:
 > 
->     conversion factor = 3.704369 * e^(-0.03671937*Dw)
+>     conversion factor = 3.704369 * e^(-0.003671937*Dw)
 >
 > For 16 cm phantoms:
 > 
->     conversion factor = 1.874799 * e^(-0.03871313*Dw)
+>     conversion factor = 1.874799 * e^(-0.003871313*Dw)
 > 
-> _(Source: AAPM Report 204. Note that Report 220 recommends to use _D<sub>w</sub>_ instead of effective diameter, as mentioned in Report 220 Appendix A)_
+> _(Derived from: AAPM Report 204. Note that Report 220 Appendix A recommends to use _D<sub>w</sub>_ even though Report 204 uses effective diameter)_
+
 
 ### External links
 McCollough C, Bakalyar DM, Bostani M, Brady S, Boedeker K, Boone JM, Chen-Mayer HH, Christianson OI, Leng S, Li B, McNitt-Gray MF. [Use of water equivalent diameter for calculating patient size and size-specific dose estimates (SSDE) in CT: The Report of AAPM Task Group 220.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4991550/) AAPM report. 2014 Sep;2014:6.
