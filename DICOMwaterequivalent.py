@@ -129,10 +129,11 @@ if __name__ == "__main__":
     except:
         raise AttributeError('\n\nUsage:\n$ DICOMwaterequivalent.py filename threshold\nRead source code for details.')
 
-    result = DICOMwaterequivalent(filename, threshold, (1000,40))
 
-    # cv2.imwrite('out.png', result[6])    # to write numpy image as file
-    print(result[0:5])                     # results[0:5] = (Aw, Dw, Ap, Dp, Aph, Dph)
+    result = DICOMwaterequivalent(filename, threshold, (1600,-400))
+
+    # cv2.imwrite('out.png', result[6]) # to write numpy image as file
+    print(result[0:6], flush=True)                # results[0:6] = (Aw, Dw, Ap, Dp, Aph, Dph)
     cv2.imshow('DICOMwaterequivalent', result[6]) # results[6] = numpy image, press any key in graphical window to close
     cv2.waitKey(0)
     cv2.destroyAllWindows()
