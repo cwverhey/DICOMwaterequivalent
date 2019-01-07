@@ -1,5 +1,5 @@
 # DICOMwaterequivalent
-Python script to calculate water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_) and effective diameter, for 16 bit CT DICOM images, as proposed by AAPM Task Groups 204 and 220 for calculating patient size for size-specific dose estimates (SSDE) in CT. _A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation, while effective diameter only describes the patient geometry.
+Python script to calculate water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_) and area-equivalent diameter, for 16 bit CT DICOM images, as proposed by AAPM Task Groups 204 and 220 for calculating patient size for size-specific dose estimates (SSDE) in CT. _A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation, while area-effective diameter only describes the patient geometry.
 
 This script can be used as a standalone script or included as a function.
 
@@ -29,9 +29,9 @@ Tuple containing:
 1.  water equivalent area _A<sub>w</sub>_ in mm² (float),
 2.  water equivalent diameter _D<sub>w</sub>_ in mm (float),
 3.  ROI area in mm² (float),
-4.  ROI equivalent circle diameter in mm (float),
+4.  ROI area-equivalent circle diameter in mm (float),
 5.  ROI hull area in mm² (float),
-6.  ROI hull equivalent circle diameter in mm(float),
+6.  ROI hull area-equivalent circle diameter in mm(float),
 7.  image displaying ROI and ROI hull contours (numpy array).
 
 ### Example
@@ -66,9 +66,9 @@ Tuple containing:
 	water equivalent area _A<sub>w</sub>_ in mm² (float),
 	water equivalent diameter _D<sub>w</sub>_ in mm (float),
 	ROI area in mm² (float),
-	ROI equivalent circle diameter in mm (float),
+	ROI area-equivalent circle diameter in mm (float),
 	ROI hull area in mm² (float),
-	ROI hull equivalent circle diameter in mm (float)
+	ROI hull area-equivalent circle diameter in mm (float)
 )
 ```
 
@@ -96,7 +96,7 @@ SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the 
 > 
 >     conversion factor = 1.874799 * e^(-0.003871313*Dw)
 > 
-> _(Derived from the formulae with D<sub>w</sub> in cm in AAPM Report 204. Note that Report 220 Appendix A recommends to use _D<sub>w</sub>_ even though Report 204 uses effective diameter)_
+> _(Derived from the formulae with D<sub>w</sub> in cm in AAPM Report 204. Note that Report 220 Appendix A clarifies that _D<sub>w</sub>_ should be used, which is reported as 'effective diameter' in Report 204)_
 
 
 ### External links
