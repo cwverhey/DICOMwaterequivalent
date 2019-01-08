@@ -105,3 +105,7 @@ McCollough C, Bakalyar DM, Bostani M, Brady S, Boedeker K, Boone JM, Chen-Mayer 
 Boone JM, Strauss KJ, Cody DD, McCollough CH, McNitt‐Gray MF, Toth TL. [Size‐Specific Dose Estimates (SSDE) in Pediatric and Adult Body CT Examinations: Report of AAPM Task Group 204 ...](https://www.aapm.org/pubs/reports/rpt_204.pdf). College Park, MD: American Association of Physicists in Medicine; 2011.
 
 Cheng PM. [Automated estimation of abdominal effective diameter for body size normalization of CT dose](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3649058/). Journal of digital imaging. 2013 Jun 1;26(3):406-11.
+
+### Contact
+
+Any questions or comments? Mail me: caspar@verhey.net
