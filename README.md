@@ -1,5 +1,7 @@
 # DICOMwaterequivalent
-This is a python 3 script / program to calculate the water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_) and area-equivalent diameter, for 16 bit CT DICOM images. _A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation, as proposed by AAPM Task Groups 204 and 220 for calculating the patient size for size-specific dose estimates (SSDE) in CT. The area-equivalent diameter only describes the patient geometry and could be used as another measurement of patient size, for instance to impute missing BMI data when patient length is available.
+This is a python 3 script / program to calculate the patient's water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_) and area-equivalent diameter, from 16 bit CT DICOM images.
+
+_A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation as proposed by AAPM Task Groups 204 and 220 for calculating the patient size for size-specific dose estimates (SSDE) in CT. The area-equivalent diameter only describes the patient geometry and could be used as another measurement of patient size, in itself or for instance to impute missing BMI data when patient length is available.
 
 This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone-use).
 
@@ -8,23 +10,19 @@ This script can be used as a [Python function](#python-function) or as a [standa
 > :warning: This software has not (yet) been peer reviewed and should not be used without adequate professional judgment. Please read LICENSE for further disclaimers.
 
 ## Contents
-- [DICOMwaterequivalent](#dicomwaterequivalent)
-  * [Contents](#contents)
-  * [Requirements](#requirements)
-  * [Python function](#python-function)
-    + [Usage](#usage)
-    + [Returns](#returns)
-    + [Example](#example)
-  * [Standalone use](#standalone-use)
-    + [Usage](#usage-1)
-    + [Output](#output)
-        * [Console](#console)
-        * [Graphic](#graphic)
-    + [Example](#example-1)
-  * [More information](#more-information)
-    + [Using SSDE factors](#using-ssde-factors)
-    + [Sources / suggested reading](#sources---suggested-reading)
-    + [Contact](#contact)
+* [Requirements](#requirements)
+* [Python function](#python-function)
+  + [Usage](#usage)
+  + [Returns](#returns)
+  + [Example](#example)
+* [Standalone use](#standalone-use)
+  + [Usage](#usage-1)
+  + [Output](#output)
+  + [Example](#example-1)
+* [More information](#more-information)
+  + [Using SSDE factors](#using-ssde-factors)
+  + [Sources / suggested reading](#sources---suggested-reading)
+  + [Contact](#contact)
 
 ## Requirements
 cv2, pydicom
@@ -36,6 +34,8 @@ Download the file `DICOMwaterequivalent.py` and place it in your working directo
     $ python3 -c 'import sys; print(sys.path)'
 
 ## Python function
+You can call DICOMwaterequivalent() from your own python script.
+
 ### Usage
 
 ```python
@@ -49,13 +49,13 @@ Download the file `DICOMwaterequivalent.py` and place it in your working directo
 
 ### Returns
 Tuple containing:
-[0]  water equivalent area _A<sub>w</sub>_ in mm² (float),
-[1]  water equivalent diameter _D<sub>w</sub>_ in mm (float),
-[2]  ROI area in mm² (float),
-[3]  ROI area-equivalent circle diameter in mm (float),
-[4]  ROI hull area in mm² (float),
-[5]  ROI hull area-equivalent circle diameter in mm(float),
-[6]  image displaying ROI and ROI hull contours (numpy array).
+- [0]  water equivalent area _A<sub>w</sub>_ in mm² (float),
+- [1]  water equivalent diameter _D<sub>w</sub>_ in mm (float),
+- [2]  ROI area in mm² (float),
+- [3]  ROI area-equivalent circle diameter in mm (float),
+- [4]  ROI hull area in mm² (float),
+- [5]  ROI hull area-equivalent circle diameter in mm(float),
+- [6]  image displaying ROI and ROI hull contours (numpy array).
 
 ### Example
 
@@ -75,6 +75,8 @@ Tuple containing:
 ```
 
 ## Standalone use
+You can call DICOMwaterequivalent.py from the command line.
+
 ### Usage
 
     ./DICOMwaterequivalent.py <filename> <threshold> <ww> <wl>
