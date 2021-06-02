@@ -21,7 +21,7 @@ This script can be used as a [Python function](#python-function) or as a [standa
   + [Example](#example-1)
 * [More information](#more-information)
   + [Using SSDE factors](#using-ssde-factors)
-  + [Sources / suggested reading](#sources---suggested-reading)
+  + [Sources / suggested reading](#sources--suggested-reading)
   + [Contact](#contact)
 
 ## Requirements
