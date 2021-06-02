@@ -62,8 +62,12 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
 
     # find contours, without hierarchical relationships
     ret,thresh = cv2.threshold(filter_img, 127, 255, 0)
-    image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
-
+    # cv2 >= 4.0 has a different function call :') 
+    if int(cv2.__version__.split('.')[0]) <= 4:
+        contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
+    else:
+        image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
+        
     # calculate area and equivalent circle diameter for the largest contour (assumed to be the patient without table or clothing)
     contour = max(contours, key=lambda a: cv2.contourArea(a))
     area = cv2.contourArea(contour) * scale
