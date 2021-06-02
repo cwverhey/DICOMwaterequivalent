@@ -46,24 +46,24 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
         image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
         
     # calculate area and equivalent circle diameter for the largest contour (assumed to be the patient without table or clothing)
-    contour = max(contours, key=lambda a: cv2.contourArea(a))
-    area = cv2.contourArea(contour) * scale
-    equiv_circle_diam = 2.0*math.sqrt(area/math.pi)
+    roi_contour = max(contours, key=lambda a: cv2.contourArea(a))
+    roi_area = cv2.contourArea(roi_contour) * scale
+    roi_equiv_circle_diam = 2.0*math.sqrt(roi_area/math.pi)
 
-    hull = cv2.convexHull(contour)
-    hullarea = cv2.contourArea(hull) * scale
-    hullequiv = 2.0*math.sqrt(hullarea/math.pi)
+    hull_contour = cv2.convexHull(roi_contour)
+    hull_area = cv2.contourArea(hull_contour) * scale
+    hull_equiv_circle_diam = 2.0*math.sqrt(hull_area/math.pi)
 
     # create mask of largest contour
     mask_img = np.zeros((dicom_img.shape), np.uint8)
-    cv2.drawContours(mask_img,[contour],0,255,-1)
+    cv2.drawContours(mask_img,[roi_contour],0,255,-1)
 
     # calculate mean HU of mask area
     roi_mean_hu = cv2.mean(dicom_img, mask=mask_img)[0]
 
     # calculate water equivalent area (Aw) and water equivalent circle diameter (Dw)
-    water_equiv_area = 0.001 * roi_mean_hu * area + area
-    water_equiv_circle_diam = 2.0 * math.sqrt(water_equiv_area/math.pi)
+    water_equiv_area = 0.001 * roi_mean_hu * roi_area + roi_area # AAPM 220 formula 3d
+    water_equiv_circle_diam = 2.0*math.sqrt(water_equiv_area/math.pi)
 
     if window:
         # map ww/wl to human-viewable image (view_img)
@@ -77,60 +77,71 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
         overlay_img = np.copy(view_img)
 
         # draw contour 3px wide on overlay layer, merge layers with transparency
-        cv2.drawContours(overlay_img, [hull], -1, (0,255,255), 2, cv2.LINE_AA)
-        cv2.drawContours(overlay_img, [contour], -1, (0,255,0), 2, cv2.LINE_AA)
+        cv2.drawContours(overlay_img, [hull_contour], -1, (0,255,255), 2, cv2.LINE_AA)
+        cv2.drawContours(overlay_img, [roi_contour], -1, (0,255,0), 2, cv2.LINE_AA)
         cv2.addWeighted(overlay_img, 0.40, view_img, 1 - 0.40, 0, view_img)
         
         # add text: first draw shade, then draw text over it
         cv2.putText(view_img, "(equiv.) area", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "(equiv.) area", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "(equiv.) area", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1, cv2.LINE_AA)
         
         cv2.putText(view_img, "equiv. circle diam.", (265,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "equiv. circle diam.", (265,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "equiv. circle diam.", (265,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1, cv2.LINE_AA)
         
         
         cv2.putText(view_img, "water eq.", (10,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "water eq.", (10,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "water eq.", (10,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
         
         cv2.putText(view_img, "{:.0f} mm  (Aw)".format(water_equiv_area), (100,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm  (Aw)".format(water_equiv_area), (100,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm  (Aw)".format(water_equiv_area), (100,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
         
         cv2.putText(view_img, "2", (189,32), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "2", (189,32), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "2", (189,32), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (255,200,200), 1, cv2.LINE_AA)
         
         cv2.putText(view_img, "{:.0f} mm (Dw)".format(water_equiv_circle_diam), (265,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm (Dw)".format(water_equiv_circle_diam), (265,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm (Dw)".format(water_equiv_circle_diam), (265,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
         
         
-        cv2.putText(view_img, "patient", (10,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "patient", (10,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "ROI", (10,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "ROI", (10,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "{:.0f} mm".format(area), (100,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm".format(area), (100,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(roi_area), (100,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(roi_area), (100,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
         
         cv2.putText(view_img, "2", (189,49), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
         cv2.putText(view_img, "2", (189,49), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,255,0), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "{:.0f} mm".format(equiv_circle_diam), (265,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm".format(equiv_circle_diam), (265,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(roi_equiv_circle_diam), (265,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(roi_equiv_circle_diam), (265,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
         
         
         cv2.putText(view_img, "hull", (10,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
         cv2.putText(view_img, "hull", (10,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "{:.0f} mm".format(hullarea), (100,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm".format(hullarea), (100,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(hull_area), (100,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(hull_area), (100,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
         
         cv2.putText(view_img, "2", (189,65), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
         cv2.putText(view_img, "2", (189,65), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,200,200), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "{:.0f} mm".format(hullequiv), (265,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm".format(hullequiv), (265,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
         
     else:
         view_img = False
 
-    return( area, equiv_circle_diam, water_equiv_area, water_equiv_circle_diam, hullarea, hullequiv, view_img )
+    # return values
+    ret = { "roiArea": roi_area,
+            "roiEquivalentCircleDiameter": roi_equiv_circle_diam,
+            "waterEquivalentArea": water_equiv_area,
+            "Aw": water_equiv_area,
+            "waterEquivalentCircleDiameter": water_equiv_circle_diam,
+            "Dw": water_equiv_circle_diam,
+            "hullArea": hull_area,
+            "hullEquivalentCircleDiameter": hull_equiv_circle_diam,
+            "image": view_img
+          }
+    return(ret)
 
 if __name__ == "__main__":
 
@@ -149,12 +160,17 @@ if __name__ == "__main__":
             raise AttributeError('Wrong number of parameters')
     except:
         raise AttributeError('\n\nUsage:\n$ DICOMwaterequivalent.py [filename] [threshold] [ww] [wl]\n\nWindow width, window level default to 1600, -400. See README.md or https://github.com/cwverhey/DICOMwaterequivalent for details.')
-
-
+        
     result = DICOMwaterequivalent(filename, threshold, (ww,wl))
-
+    
     # cv2.imwrite('out.png', result[6]) # to write numpy image as file
-    print(result[0:6], flush=True)                # results[0:6] = (Aw, Dw, Ap, Dp, Aph, Dph)
-    cv2.imshow('DICOMwaterequivalent', result[6]) # results[6] = numpy image, press any key in graphical window to close
-    cv2.waitKey(0)
+    
+    # print values except image
+    for k in result.keys():
+        if(k != 'image'):
+            print(k+': '+str(result[k]), flush=True)                # results[0:6] = (Aw, Dw, Ap, Dp, Aph, Dph)
+            
+    # display image in window
+    cv2.imshow('DICOMwaterequivalent', result['image'])
+    cv2.waitKey(0) # press any key in graphical window to close
     cv2.destroyAllWindows()
