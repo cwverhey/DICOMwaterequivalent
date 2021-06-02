@@ -89,43 +89,46 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
         cv2.putText(view_img, "equiv. circle diam.", (265,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1, cv2.LINE_AA)
         
         
-        cv2.putText(view_img, "water eq.", (10,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "water eq.", (10,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "water eq.", (10,40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "water eq.", (10,40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "{:.0f} mm  (Aw)".format(water_equiv_area), (100,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm  (Aw)".format(water_equiv_area), (100,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm  (Aw)".format(water_equiv_area), (100,40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm  (Aw)".format(water_equiv_area), (100,40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
+        str_width = cv2.getTextSize("{:.0f} mm".format(water_equiv_area), cv2.FONT_HERSHEY_SIMPLEX,  0.5, 1)[0][0];
         
-        cv2.putText(view_img, "2", (189,32), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "2", (189,32), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (255,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "2", (100+str_width,36), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "2", (100+str_width,36), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (255,200,200), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "{:.0f} mm (Dw)".format(water_equiv_circle_diam), (265,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm (Dw)".format(water_equiv_circle_diam), (265,36), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
-        
-        
-        cv2.putText(view_img, "ROI", (10,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "ROI", (10,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
-        
-        cv2.putText(view_img, "{:.0f} mm".format(roi_area), (100,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm".format(roi_area), (100,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
-        
-        cv2.putText(view_img, "2", (189,49), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "2", (189,49), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,255,0), 1, cv2.LINE_AA)
-        
-        cv2.putText(view_img, "{:.0f} mm".format(roi_equiv_circle_diam), (265,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm".format(roi_equiv_circle_diam), (265,52), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm (Dw)".format(water_equiv_circle_diam), (265,40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm (Dw)".format(water_equiv_circle_diam), (265,40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,200,200), 1, cv2.LINE_AA)
         
         
-        cv2.putText(view_img, "hull", (10,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "hull", (10,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "ROI", (10,60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "ROI", (10,60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "{:.0f} mm".format(hull_area), (100,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm".format(hull_area), (100,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(roi_area), (100,60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(roi_area), (100,60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        str_width = cv2.getTextSize("{:.0f} mm".format(roi_area), cv2.FONT_HERSHEY_SIMPLEX,  0.5, 1)[0][0];
         
-        cv2.putText(view_img, "2", (189,65), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "2", (189,65), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "2", (100+str_width,56), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "2", (100+str_width,56), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,255,0), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,68), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(roi_equiv_circle_diam), (265,60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(roi_equiv_circle_diam), (265,60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv2.LINE_AA)
+        
+        
+        cv2.putText(view_img, "hull", (10,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "hull", (10,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        
+        cv2.putText(view_img, "{:.0f} mm".format(hull_area), (100,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(hull_area), (100,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        str_width = cv2.getTextSize("{:.0f} mm".format(hull_area), cv2.FONT_HERSHEY_SIMPLEX,  0.5, 1)[0][0];
+        
+        cv2.putText(view_img, "2", (100+str_width,76), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "2", (100+str_width,76), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (0,200,200), 1, cv2.LINE_AA)
+        
+        cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
         
     else:
         view_img = False
@@ -168,9 +171,17 @@ if __name__ == "__main__":
     # print values except image
     for k in result.keys():
         if(k != 'image'):
-            print(k+': '+str(result[k]), flush=True)                # results[0:6] = (Aw, Dw, Ap, Dp, Aph, Dph)
+            print(k+': '+str(result[k]), flush=True)
             
     # display image in window
+    cv2.namedWindow('DICOMwaterequivalent',cv2.WINDOW_NORMAL)
     cv2.imshow('DICOMwaterequivalent', result['image'])
+    
+    # focus window
+    cv2.setWindowProperty('DICOMwaterequivalent',cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
+    cv2.setWindowProperty('DICOMwaterequivalent',cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_NORMAL)
+    
+    # wait for keypress
+    print('Press any key in the GUI to quit')
     cv2.waitKey(0) # press any key in graphical window to close
     cv2.destroyAllWindows()
