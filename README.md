@@ -136,7 +136,7 @@ SSDE conversion factors can be calculated from _D<sub>w</sub>_ depending on the 
 > 
 > _(Derived from the formulae with D<sub>w</sub> in cm in AAPM Report 204. Note that Report 220 Appendix A clarifies that _D<sub>w</sub>_ should be used, which is reported as 'effective diameter' in Report 204)_
 
-The resulting conversion factors can then be applied to phantom-based dose estimates (Gy*cm or Sv), to achieve a size-specific dose estimate.
+The resulting conversion factors can then be applied to phantom-based dose estimates (Gy*cm or Sv), to achieve a size-specific dose estimate. Of course it makes most sense to do this for every slice of a scan, not just a single slice.
 
 ### Sources / suggested reading
 AAPM report 220: McCollough C, Bakalyar DM, Bostani M, Brady S, Boedeker K, Boone JM, Chen-Mayer HH, Christianson OI, Leng S, Li B, McNitt-Gray MF. [Use of water equivalent diameter for calculating patient size and size-specific dose estimates (SSDE) in CT: The Report of AAPM Task Group 220](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4991550/). AAPM report. 2014 Sep;2014:6.
