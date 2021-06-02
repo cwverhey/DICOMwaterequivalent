@@ -12,11 +12,11 @@ This script can be used as a [Python function](#python-function) or as a [standa
 ## Contents
 * [Requirements](#requirements)
 * [Python function](#python-function)
-  + [Usage](#usage)
+  + [Input](#input)
   + [Returns](#returns)
   + [Example](#example)
 * [Standalone](#standalone)
-  + [Usage](#usage-1)
+  + [Input](#input-1)
   + [Output](#output)
   + [Example](#example-1)
 * [More information](#more-information)
@@ -36,10 +36,11 @@ Download the file `DICOMwaterequivalent.py` and place it in your working directo
 ## Python function
 You can call DICOMwaterequivalent() from your own python script:
 
-### Usage
+### Input
 
 ```python
->>> import DICOMwaterequivalent
+$ python3
+>>> from DICOMwaterequivalent import DICOMwaterequivalent
 >>> DICOMwaterequivalent(filename, threshold, window)
 ```
 
@@ -48,36 +49,35 @@ You can call DICOMwaterequivalent() from your own python script:
 * window:    (optional) view window for output image, as tuple (ww,wl). If omitted, no image will be outputted.
 
 ### Returns
-Tuple containing:
-- [0]  water equivalent area _A<sub>w</sub>_ in mm² (float),
-- [1]  water equivalent circle diameter _D<sub>w</sub>_ in mm (float),
-- [2]  ROI area in mm² (float),
-- [3]  ROI area-equivalent circle diameter in mm (float),
-- [4]  ROI hull area in mm² (float),
-- [5]  ROI hull area-equivalent circle diameter in mm(float),
-- [6]  image displaying ROI and ROI hull contours (numpy array).
+Dictionary containing:
+
+	{'roiArea': <ROI area in mm² (float)>,
+	 'roiEquivalentCircleDiameter': <ROI area-equivalent circle diameter in mm (float)>,
+	 'waterEquivalentArea': <water equivalent area Aw in mm² (float)>,
+	 'Aw': <same as waterEquivalentArea>,
+	 'waterEquivalentCircleDiameter': <water equivalent circle diameter Dw in mm (float)>,
+	 'Dw': <same as waterEquivalentCircleDiameter>,
+	 'hullArea': <ROI hull area in mm² (float)>,
+	 'hullEquivalentCircleDiameter': <ROI hull area-equivalent circle diameter in mm (float)>,
+	 'image': <image displaying ROI and ROI hull contours, overlaid with values mentioned above (numpy array)>
+	}
 
 ### Example
 
 ```python
->>> import DICOMwaterequivalent
+$ python3
+>>> from DICOMwaterequivalent import DICOMwaterequivalent
 >>> equiv = DICOMwaterequivalent('480.0.dcm', -250, (1000,40))
 >>> print(equiv)
-( 24740.231323242188, 
-  177.48307205659782, 
-  27518.49097592727,
-  187.18341518945613,
-  25731.055450439453,
-  181.0022025481258,
-  array([[[0, 0, 0], ... ]]], dtype=uint8))
-)
->>> cv2.imwrite('out.png', equiv[6])
+{'roiArea': 21445.37160223951, 'roiEquivalentCircleDiameter': 165.24253440174482, 'waterEquivalentArea': 26328.33432149283, 'Aw': 26328.33432149283, 'waterEquivalentCircleDiameter': 183.0908965654292, 'Dw': 183.0908965654292, 'hullArea': 23966.764703619567, 'hullEquivalentCircleDiameter': 174.68666972614523, 'image': array([[[0, 0, 0], ... ]]], dtype=uint8)}
+>>> import cv2
+>>> cv2.imwrite('out.png', equiv['image'])
 ```
 
 ## Standalone
 You can call DICOMwaterequivalent.py from the command line.
 
-### Usage
+### Input
 
     $ ./DICOMwaterequivalent.py <filename> <threshold> <ww> <wl>
 
@@ -101,8 +101,8 @@ hullArea: <ROI hull area in mm² (float)>
 hullEquivalentCircleDiameter: <ROI hull area-equivalent circle diameter in mm (float)>
 ```
 
-##### Graphic
-Image displaying ROI and ROI hull contours, along with values mentioned above. Press any key to close.
+##### Visual
+Image displaying ROI and ROI hull contours, overlaid with values mentioned above. Press any key to close.
 
 ### Example
 
@@ -115,9 +115,10 @@ Image displaying ROI and ROI hull contours, along with values mentioned above. P
 	Dw: 183.0908965654292
 	hullArea: 23966.764703619567
 	hullEquivalentCircleDiameter: 174.68666972614523
+
 <img align="left" src="screenshot.png" />
 <br clear="all" />
-* Example source image courtesy of Patient Contributed Image Repository patient 54879843, available from http://www.pcir.org/researchers/downloads_available.html
+* Example dicom file courtesy of Patient Contributed Image Repository patient 54879843, available from http://www.pcir.org/researchers/downloads_available.html
 
 ## More information
 
