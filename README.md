@@ -1,13 +1,13 @@
 # DICOMwaterequivalent
-This is a python 3 script / program to calculate the patient's water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_) and area-equivalent diameter, from 16 bit CT DICOM images.
+This is a python 3 script / program to calculate the patient's water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_), and area-equivalent diameter, from 16 bit CT DICOM images.
 
-_A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation as proposed by AAPM Task Groups 204 and 220 for calculating the patient size for size-specific dose estimates (SSDE) in CT. The area-equivalent diameter only describes the patient geometry and could be used as another measurement of patient size, in itself or for instance to impute missing BMI data when patient length is available.
+_A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation as proposed by AAPM Task Groups 204 and 220 for calculating the patient size for size-specific dose estimates (SSDE) in CT. The area-equivalent diameter only describes the patient geometry and could be used as another measurement of patient size, for instance to impute missing BMI data when patient length is available.
 
-This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone-use).
+This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone).
 
 > :warning: Always check the output image for correct ROI placement. The ROI is automatically placed around the largest contour with HUs above the ROI HU threshold. You must manually set the ROI HU threshold. Confirm that the patient contour is inside the displayed ROI outline, and that the ROI does not include the CT examination table, air, clothing, implants, ECG leads etc. Exclusion of implants is not (yet) possible with this script.
 
-> :warning: This software has not (yet) been peer reviewed and should not be used without adequate professional judgment. Please read LICENSE for further disclaimers.
+> :warning: This software and its results should not be used blindly without adequate professional judgment. Read LICENSE for further disclaimers.
 
 ## Contents
 * [Requirements](#requirements)
@@ -15,7 +15,7 @@ This script can be used as a [Python function](#python-function) or as a [standa
   + [Usage](#usage)
   + [Returns](#returns)
   + [Example](#example)
-* [Standalone use](#standalone-use)
+* [Standalone](#standalone)
   + [Usage](#usage-1)
   + [Output](#output)
   + [Example](#example-1)
@@ -25,7 +25,7 @@ This script can be used as a [Python function](#python-function) or as a [standa
   + [Contact](#contact)
 
 ## Requirements
-cv2, pydicom
+Modules `cv2` and `pydicom`:
 
     $ pip3 install opencv-python pydicom
 
@@ -44,7 +44,7 @@ You can call DICOMwaterequivalent() from your own python script.
 ```
 
 * filename:  DICOM file (absolute or relative path).
-* threshold: ROI contour threshold level in HU.
+* threshold: ROI contour threshold level (in HU).
 * window:    (optional) view window for output image, as tuple (ww,wl). If omitted, no image will be outputted.
 
 ### Returns
@@ -74,24 +74,26 @@ Tuple containing:
 >>> cv2.imwrite('out.png', equiv[6])
 ```
 
-## Standalone use
+## Standalone
 You can call DICOMwaterequivalent.py from the command line.
 
 ### Usage
 
-    ./DICOMwaterequivalent.py <filename> <threshold> <ww> <wl>
+    $ ./DICOMwaterequivalent.py <filename> <threshold> <ww> <wl>
 
 * filename:  DICOM file (absolute or relative path).
 * threshold: ROI contour threshold level in HU.
 * ww: window width (optional, default: 1600).
-* wl: window level (optional, default: -400)
+* wl: window level (optional, default: -400).
+
+You need to specify both ww and wl, or neither.
 
 ### Output
 ##### Console
 ```
 (
 	water equivalent area Aw in mm² (float),
-	water equivalent diameter Dw in mm (float),
+	water equivalent circle diameter Dw in mm (float),
 	ROI area in mm² (float),
 	ROI area-equivalent circle diameter in mm (float),
 	ROI hull area in mm² (float),
