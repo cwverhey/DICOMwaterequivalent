@@ -5,9 +5,9 @@ _A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation as proposed by A
 
 This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone).
 
-> :warning: Always check the output image for correct ROI placement. The ROI is automatically placed around the largest contour with HUs above the ROI HU threshold. You must manually set the ROI HU threshold. Confirm that the patient contour is inside the displayed ROI outline, and that the ROI does not include the CT examination table, air, clothing, implants, ECG leads etc. Exclusion of implants is not (yet) possible with this script.
+> :warning: Always check the output image for correct ROI placement. The ROI is automatically placed around the largest contour with HUs above the ROI HU threshold. You must manually set the ROI HU threshold. Confirm that the patient contour is inside the displayed ROI outline, and that the ROI does not include the CT examination table, clothing, implants, ECG leads etc. For the area-equivalent circle, avoid including air. Exclusion of implants is not (yet) possible with this script.
 
-> :warning: This software and its results should not be used blindly without adequate professional judgment. Read LICENSE for further disclaimers.
+> :warning: This software and its results should not be used blindly without adequate professional judgment. Verify that the pixel-to-mm scaling is done correctly by checking the ROI area with the CT manufacturer's software. Read LICENSE for further disclaimers.
 
 ## Contents
 * [Requirements](#requirements)
@@ -82,32 +82,39 @@ You can call DICOMwaterequivalent.py from the command line.
     $ ./DICOMwaterequivalent.py <filename> <threshold> <ww> <wl>
 
 * filename:  DICOM file (absolute or relative path).
-* threshold: ROI contour threshold level in HU.
-* ww: window width (optional, default: 1600).
-* wl: window level (optional, default: -400).
+* threshold: ROI contour threshold level (in HU).
+* ww: (optional) window width (default: 1600).
+* wl: (optional) window level (default: -400).
 
 You need to specify both ww and wl, or neither.
 
 ### Output
 ##### Console
 ```
-(
-	water equivalent area Aw in mm² (float),
-	water equivalent circle diameter Dw in mm (float),
-	ROI area in mm² (float),
-	ROI area-equivalent circle diameter in mm (float),
-	ROI hull area in mm² (float),
-	ROI hull area-equivalent circle diameter in mm (float)
-)
+roiArea: <ROI area in mm² (float)>
+roiEquivalentCircleDiameter: <ROI area-equivalent circle diameter in mm (float)>
+waterEquivalentArea: <water equivalent area Aw in mm² (float)>
+Aw: <same as waterEquivalentArea>
+waterEquivalentCircleDiameter: <water equivalent circle diameter Dw in mm (float)>
+Dw: <same as waterEquivalentCircleDiameter>
+hullArea: <ROI hull area in mm² (float)>
+hullEquivalentCircleDiameter: <ROI hull area-equivalent circle diameter in mm (float)>
 ```
 
 ##### Graphic
-image displaying ROI and ROI hull contours (press any key to close & continue)
+Image displaying ROI and ROI hull contours, along with values mentioned above. Press any key to close.
 
 ### Example
 
-    $ ./DICOMwaterequivalent.py 480.0.dcm -250
-    (24740.231323242188, 177.48307205659782, 27518.49097592727, 187.18341518945613, 25731.055450439453, 181.0022025481258)
+	$ ./DICOMwaterequivalent.py 480.0.dcm -250
+	roiArea: 21445.37160223951
+	roiEquivalentCircleDiameter: 165.24253440174482
+	waterEquivalentArea: 26328.33432149283
+	Aw: 26328.33432149283
+	waterEquivalentCircleDiameter: 183.0908965654292
+	Dw: 183.0908965654292
+	hullArea: 23966.764703619567
+	hullEquivalentCircleDiameter: 174.68666972614523
 <img align="left" src="screenshot.png" />
 <br clear="all" />
 * Example source image courtesy of Patient Contributed Image Repository patient 54879843, available from http://www.pcir.org/researchers/downloads_available.html
