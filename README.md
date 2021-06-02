@@ -34,7 +34,7 @@ Download the file `DICOMwaterequivalent.py` and place it in your working directo
     $ python3 -c 'import sys; print(sys.path)'
 
 ## Standalone
-You can call DICOMwaterequivalent.py from the command line.
+You can call DICOMwaterequivalent.py from the command line:
 
 ### Input
 
