@@ -62,7 +62,7 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
 
     # find contours, without hierarchical relationships
     ret,thresh = cv2.threshold(filter_img, 127, 255, 0)
-    # cv2 >= 4.0 has a different function call :') 
+    # cv2 >= 4.0 has a different output format
     if int(cv2.__version__.split('.')[0]) <= 4:
         contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
     else:
@@ -128,13 +128,22 @@ if __name__ == "__main__":
 
     import sys
     try:
-        filename = sys.argv[1]
-        threshold = int(sys.argv[2])
+        if len(sys.argv) == 3 or len(sys.argv) == 5:
+            filename = sys.argv[1]
+            threshold = int(sys.argv[2])
+            if len(sys.argv) == 5:
+                ww = int(sys.argv[3])
+                wl = int(sys.argv[4])
+            else:
+                ww = 1600
+                wl = -400
+        else:
+            raise AttributeError('Wrong number of parameters')
     except:
-        raise AttributeError('\n\nUsage:\n$ DICOMwaterequivalent.py filename threshold\nRead source code for details.')
+        raise AttributeError('\n\nUsage:\n$ DICOMwaterequivalent.py [filename] [threshold] [ww] [wl]\n\nWindow width, window level default to 1600, -400. See README.md or https://github.com/cwverhey/DICOMwaterequivalent for details.')
 
 
-    result = DICOMwaterequivalent(filename, threshold, (1600,-400))
+    result = DICOMwaterequivalent(filename, threshold, (ww,wl))
 
     # cv2.imwrite('out.png', result[6]) # to write numpy image as file
     print(result[0:6], flush=True)                # results[0:6] = (Aw, Dw, Ap, Dp, Aph, Dph)
