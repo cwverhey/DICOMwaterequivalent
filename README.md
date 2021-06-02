@@ -1,7 +1,7 @@
 # DICOMwaterequivalent
-This is a python 3 script / program to calculate the patient's water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_), and area-equivalent diameter, from 16 bit CT DICOM images.
+This is a python 3 script / program to calculate the patient's water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_), and area-equivalent circle diameter, from 16 bit CT DICOM images.
 
-_A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation as proposed by AAPM Task Groups 204 and 220 for calculating the patient size for size-specific dose estimates (SSDE) in CT. The area-equivalent diameter only describes the patient geometry and could be used as another measurement of patient size, for instance to impute missing BMI data when patient length is available.
+_A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation as proposed by AAPM Task Groups 204 and 220 for calculating the patient size for size-specific dose estimates (SSDE) in CT. The area-equivalent circle diameter only describes the patient geometry and could be used as another measurement of patient size, for instance to impute missing BMI data when patient length is available.
 
 This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone).
 
@@ -29,12 +29,12 @@ Modules `cv2` and `pydicom`:
 
     $ pip3 install opencv-python pydicom
 
-Download the file `DICOMwaterequivalent.py` and place it in your working directory. Alternatively, you can put it in one of the other directories Python checks for modules. To list these directories:
+Download the file `DICOMwaterequivalent.py` and place it in your working directory. Alternatively, you can put it in one of the other directories that Python checks for modules. To list these directories:
 
     $ python3 -c 'import sys; print(sys.path)'
 
 ## Python function
-You can call DICOMwaterequivalent() from your own python script.
+You can call DICOMwaterequivalent() from your own python script:
 
 ### Usage
 
@@ -50,7 +50,7 @@ You can call DICOMwaterequivalent() from your own python script.
 ### Returns
 Tuple containing:
 - [0]  water equivalent area _A<sub>w</sub>_ in mm² (float),
-- [1]  water equivalent diameter _D<sub>w</sub>_ in mm (float),
+- [1]  water equivalent circle diameter _D<sub>w</sub>_ in mm (float),
 - [2]  ROI area in mm² (float),
 - [3]  ROI area-equivalent circle diameter in mm (float),
 - [4]  ROI hull area in mm² (float),
