@@ -10,19 +10,19 @@ This script can be used as a [Python function](#python-function) or as a [standa
 > :warning: This software and its results should not be used blindly without adequate professional judgment. Verify that the pixel-to-mm scaling is done correctly by checking the ROI area with the CT manufacturer's software. Read LICENSE for further disclaimers.
 
 ## Contents
-* [Requirements](#requirements)
-* [Python function](#python-function)
-  + [Input](#input)
-  + [Returns](#returns)
-  + [Example](#example)
-* [Standalone](#standalone)
-  + [Input](#input-1)
-  + [Output](#output)
-  + [Example](#example-1)
-* [More information](#more-information)
-  + [Using SSDE factors](#using-ssde-factors)
-  + [Sources / suggested reading](#sources--suggested-reading)
-  + [Contact](#contact)
+  * [Requirements](#requirements)
+  * [Standalone](#standalone)
+    + [Input](#input)
+    + [Output](#output)
+    + [Example](#example)
+  * [Python function](#python-function)
+    + [Input](#input-1)
+    + [Returns](#returns)
+    + [Example](#example-1)
+  * [More information](#more-information)
+    + [Using SSDE factors](#using-ssde-factors)
+    + [Sources / suggested reading](#sources--suggested-reading)
+    + [Contact](#contact)
 
 ## Requirements
 Modules `cv2` and `pydicom`:
@@ -32,47 +32,6 @@ Modules `cv2` and `pydicom`:
 Download the file `DICOMwaterequivalent.py` and place it in your working directory. Alternatively, you can put it in one of the other directories that Python checks for modules. To list these directories:
 
     $ python3 -c 'import sys; print(sys.path)'
-
-## Python function
-You can call DICOMwaterequivalent() from your own python script:
-
-### Input
-
-```python
-$ python3
->>> from DICOMwaterequivalent import DICOMwaterequivalent
->>> DICOMwaterequivalent(filename, threshold, window)
-```
-
-* filename:  DICOM file (absolute or relative path).
-* threshold: ROI contour threshold level (in HU).
-* window:    (optional) view window for output image, as tuple (ww,wl). If omitted, no image will be outputted.
-
-### Returns
-Dictionary containing:
-
-	{'roiArea': <ROI area in mm² (float)>,
-	 'roiEquivalentCircleDiameter': <ROI area-equivalent circle diameter in mm (float)>,
-	 'waterEquivalentArea': <water equivalent area Aw in mm² (float)>,
-	 'Aw': <same as waterEquivalentArea>,
-	 'waterEquivalentCircleDiameter': <water equivalent circle diameter Dw in mm (float)>,
-	 'Dw': <same as waterEquivalentCircleDiameter>,
-	 'hullArea': <ROI hull area in mm² (float)>,
-	 'hullEquivalentCircleDiameter': <ROI hull area-equivalent circle diameter in mm (float)>,
-	 'image': <image displaying ROI and ROI hull contours, overlaid with values mentioned above (numpy array)>
-	}
-
-### Example
-
-```python
-$ python3
->>> from DICOMwaterequivalent import DICOMwaterequivalent
->>> equiv = DICOMwaterequivalent('480.0.dcm', -250, (1000,40))
->>> print(equiv)
-{'roiArea': 21445.37160223951, 'roiEquivalentCircleDiameter': 165.24253440174482, 'waterEquivalentArea': 26328.33432149283, 'Aw': 26328.33432149283, 'waterEquivalentCircleDiameter': 183.0908965654292, 'Dw': 183.0908965654292, 'hullArea': 23966.764703619567, 'hullEquivalentCircleDiameter': 174.68666972614523, 'image': array([[[0, 0, 0], ... ]]], dtype=uint8)}
->>> import cv2
->>> cv2.imwrite('out.png', equiv['image'])
-```
 
 ## Standalone
 You can call DICOMwaterequivalent.py from the command line.
@@ -119,6 +78,48 @@ Image displaying ROI and ROI hull contours, overlaid with values mentioned above
 <img align="left" src="screenshot.png" />
 <br clear="all" />
 * Example dicom file courtesy of Patient Contributed Image Repository patient 54879843, available from http://www.pcir.org/researchers/downloads_available.html
+
+## Python function
+You can call DICOMwaterequivalent() from your own python script:
+
+### Input
+
+```python
+$ python3
+>>> from DICOMwaterequivalent import DICOMwaterequivalent
+>>> DICOMwaterequivalent(filename, threshold, window)
+```
+
+* filename:  DICOM file (absolute or relative path).
+* threshold: ROI contour threshold level (in HU).
+* window:    (optional) view window for output image, as tuple (ww,wl). If omitted, no image will be outputted.
+
+### Returns
+Dictionary containing:
+
+	{
+	 'roiArea': <ROI area in mm² (float)>,
+	 'roiEquivalentCircleDiameter': <ROI area-equivalent circle diameter in mm (float)>,
+	 'waterEquivalentArea': <water equivalent area Aw in mm² (float)>,
+	 'Aw': <same as waterEquivalentArea>,
+	 'waterEquivalentCircleDiameter': <water equivalent circle diameter Dw in mm (float)>,
+	 'Dw': <same as waterEquivalentCircleDiameter>,
+	 'hullArea': <ROI hull area in mm² (float)>,
+	 'hullEquivalentCircleDiameter': <ROI hull area-equivalent circle diameter in mm (float)>,
+	 'image': <image displaying ROI and ROI hull contours, overlaid with values mentioned above (numpy array)>
+	}
+
+### Example
+
+```python
+$ python3
+>>> from DICOMwaterequivalent import DICOMwaterequivalent
+>>> equiv = DICOMwaterequivalent('480.0.dcm', -250, (1000,40))
+>>> print(equiv)
+{'roiArea': 21445.37160223951, 'roiEquivalentCircleDiameter': 165.24253440174482, 'waterEquivalentArea': 26328.33432149283, 'Aw': 26328.33432149283, 'waterEquivalentCircleDiameter': 183.0908965654292, 'Dw': 183.0908965654292, 'hullArea': 23966.764703619567, 'hullEquivalentCircleDiameter': 174.68666972614523, 'image': array([[[0, 0, 0], ... ]]], dtype=uint8)}
+>>> import cv2
+>>> cv2.imwrite('out.png', equiv['image'])
+```
 
 ## More information
 
