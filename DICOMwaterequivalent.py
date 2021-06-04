@@ -136,8 +136,8 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
         cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
         cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
         
-        cv2.putText(view_img, "ROI threshold {}HU, WW {}, WL {}".format(threshold,window[0],window[1]), (10,view_img.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
-        cv2.putText(view_img, "ROI threshold {}HU, WW {}, WL {}".format(threshold,window[0],window[1]), (10,view_img.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        cv2.putText(view_img, "ROI threshold {}HU, WW {}HU, WL {}HU".format(threshold,window[0],window[1]), (10,view_img.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "ROI threshold {}HU, WW {}HU, WL {}HU".format(threshold,window[0],window[1]), (10,view_img.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
         
     else:
         view_img = False
