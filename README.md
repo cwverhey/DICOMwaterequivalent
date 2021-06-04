@@ -1,9 +1,7 @@
 # DICOMwaterequivalent
 This is a python 3 script / program to calculate the patient's water equivalent area (A<sub>w</sub>), water equivalent circle diameter (D<sub>w</sub>), and area-equivalent circle diameter, from 16 bit CT DICOM images. A<sub>w</sub> and D<sub>w</sub> consider tissue attenuation for calculating the patient size for size-specific dose estimates (SSDE) in CT, as proposed by AAPM Task Groups 204 and 220.
 
-The program automatically determines the ROI, as the largest region of tissue above a manually chosen density threshold (in HU) and all tissue enclosed by it.
-
-This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone). It returns the following information:
+It can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone). It returns the following information:
 
 - ROI area: area of the automatically detected ROI, in mm².
 - ROI-equivalent-circle diameter: diameter of the circle with the same area as the ROI, in mm.
@@ -12,6 +10,8 @@ This script can be used as a [Python function](#python-function) or as a [standa
 - hull area: area of the convex hull around the ROI, in mm².
 - hull-equivalent-circle diameter: diameter of the circle with the same area as the hull, in mm.
 - image: the input DICOM file, overlaid with contours of the ROI and hull area, and all above measurements.
+
+The ROI is determined as the largest region of tissue above a manually chosen density threshold (in HU) and all tissue enclosed by it.
 
 > :warning: Always check the output image for correct ROI placement. The ROI is automatically placed around the largest contour with HUs above the ROI HU threshold. You must manually set the ROI HU threshold. Confirm that the patient contour is inside the displayed ROI outline, and that the ROI does not include the CT examination table, clothing, implants, ECG leads etc. For measurements other than A<sub>w</sub> and D<sub>w</sub>, also avoid including air. Exclusion of implants is not (yet) possible with this script.
 
