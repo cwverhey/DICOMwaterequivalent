@@ -1,8 +1,6 @@
 # DICOMwaterequivalent
 This is a python 3 script / program to calculate the patient's water equivalent area (A<sub>w</sub>), water equivalent circle diameter (D<sub>w</sub>), and area-equivalent circle diameter, from 16 bit CT DICOM images. A<sub>w</sub> and D<sub>w</sub> consider tissue attenuation for calculating the patient size for size-specific dose estimates (SSDE) in CT, as proposed by AAPM Task Groups 204 and 220.
 
-<img src="screenshot.png" style="height: 250px; object-fit: none;" />
-
 The program automatically determines the ROI, as the largest region of tissue above a manually chosen density threshold (in HU) and all tissue enclosed by it.
 
 This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone). It returns the following information:
