@@ -11,7 +11,7 @@ It can be used as a [Python function](#python-function) or as a [standalone Pyth
 - **hull-equivalent-circle diameter**<br>diameter of the circle with the same area as the hull, in mm.
 - **image**<br>the input DICOM file, overlaid with contours of the ROI and hull area, and all above measurements.
 
-The ROI is determined as the largest region of tissue above a manually chosen density threshold (in HU) and all tissue enclosed by it. Thresholds around -100 to -300 will usually separate the patient from the examination table well, without excluding any patient tissue.
+The ROI is determined as the largest region of tissue above a manually chosen density threshold (in HU) and all tissue enclosed by it. Thresholds around -100 to -300 will usually separate the patient from the examination table well, without excluding any patient tissue. If no ROI can be detected, it will return a ROI of 0mm².
 
 > :warning: Always check the output image for correct ROI placement. The ROI is automatically placed around the largest contour with HUs above the ROI HU threshold. You must manually set the ROI HU threshold. Confirm that the patient contour is inside the displayed ROI outline, and that the ROI does not include the CT examination table, clothing, implants, ECG leads etc. For measurements other than A<sub>w</sub> and D<sub>w</sub>, also avoid including air. Exclusion of implants is not (yet) possible with this script.
 
