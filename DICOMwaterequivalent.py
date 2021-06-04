@@ -45,11 +45,16 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
     else:
         image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
         
-    # calculate area and equivalent circle diameter for the largest contour (assumed to be the patient without table or clothing)
-    roi_contour = max(contours, key=lambda a: cv2.contourArea(a))
+    # calculate ROI area and equivalent circle diameter (ROI is the largest contour, assumed to be the patient without table or clothing)
+    if len(contours) == 0:
+        roi_contour = np.array([[[0,0]]])
+    else:
+        roi_contour = max(contours, key=lambda a: cv2.contourArea(a))
+
     roi_area = cv2.contourArea(roi_contour) * scale
     roi_equiv_circle_diam = 2.0*math.sqrt(roi_area/math.pi)
 
+    # calculate ROI hull contour
     hull_contour = cv2.convexHull(roi_contour)
     hull_area = cv2.contourArea(hull_contour) * scale
     hull_equiv_circle_diam = 2.0*math.sqrt(hull_area/math.pi)
@@ -65,6 +70,7 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
     water_equiv_area = 0.001 * roi_mean_hu * roi_area + roi_area # AAPM 220 formula 3d
     water_equiv_circle_diam = 2.0*math.sqrt(water_equiv_area/math.pi)
 
+    # create image with contours and values
     if window:
         # map ww/wl to human-viewable image (view_img)
         remap = lambda t: 255.0 * (1.0 * t - (window[1] - 0.5 * window[0])) / window[0] # create LUT function; window[0]: ww, window[1]: wl
@@ -129,6 +135,9 @@ def DICOMwaterequivalent(dicom_filename, threshold, window = False):
         
         cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
         cv2.putText(view_img, "{:.0f} mm".format(hull_equiv_circle_diam), (265,80), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
+        
+        cv2.putText(view_img, "ROI threshold {}HU, WW {}, WL {}".format(threshold,window[0],window[1]), (10,view_img.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2, cv2.LINE_AA)
+        cv2.putText(view_img, "ROI threshold {}HU, WW {}, WL {}".format(threshold,window[0],window[1]), (10,view_img.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,200,200), 1, cv2.LINE_AA)
         
     else:
         view_img = False

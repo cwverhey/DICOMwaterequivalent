@@ -1,24 +1,26 @@
 # DICOMwaterequivalent
-This is a python 3 script / program to calculate the patient's water equivalent area (_A<sub>w</sub>_), water equivalent circle diameter (_D<sub>w</sub>_), and area-equivalent circle diameter, from 16 bit CT DICOM images.
+This is a python 3 script / program to calculate the patient's water equivalent area (A<sub>w</sub>), water equivalent circle diameter (D<sub>w</sub>), and area-equivalent circle diameter, from 16 bit CT DICOM images. A<sub>w</sub> and D<sub>w</sub> consider tissue attenuation for calculating the patient size for size-specific dose estimates (SSDE) in CT, as proposed by AAPM Task Groups 204 and 220.
 
-_A<sub>w</sub>_ and _D<sub>w</sub>_ consider tissue attenuation as proposed by AAPM Task Groups 204 and 220 for calculating the patient size for size-specific dose estimates (SSDE) in CT. The area-equivalent circle diameter only describes the patient geometry and could be used as another measurement of patient size, for instance to impute missing BMI data when patient length is available.
+The program automatically determines the ROI, as the largest region of tissue above a manually chosen density threshold (in HU) and all tissue enclosed by it.
 
-This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone).
+This script can be used as a [Python function](#python-function) or as a [standalone Python script](#standalone). It returns the following information:
 
-> :warning: Always check the output image for correct ROI placement. The ROI is automatically placed around the largest contour with HUs above the ROI HU threshold. You must manually set the ROI HU threshold. Confirm that the patient contour is inside the displayed ROI outline, and that the ROI does not include the CT examination table, clothing, implants, ECG leads etc. For the area-equivalent circle, avoid including air. Exclusion of implants is not (yet) possible with this script.
+- ROI area: area of the automatically detected ROI, in mm².
+- ROI-equivalent-circle diameter: diameter of the circle with the same area as the ROI, in mm.
+- water-equivalent area (A<sub>w</sub>): ROI area normalised by its density to the density of water, in mm².
+- water-equivalent-circle diameter (D<sub>w</sub>): diameter of the circle with the same area as A<sub>w</sub>, in mm.
+- hull area: area of the convex hull around the ROI, in mm².
+- hull-equivalent-circle diameter: diameter of the circle with the same area as the hull, in mm.
+- image: the input DICOM file, overlaid with contours of the ROI and hull area, and all above measurements.
+
+> :warning: Always check the output image for correct ROI placement. The ROI is automatically placed around the largest contour with HUs above the ROI HU threshold. You must manually set the ROI HU threshold. Confirm that the patient contour is inside the displayed ROI outline, and that the ROI does not include the CT examination table, clothing, implants, ECG leads etc. For measurements other than A<sub>w</sub> and D<sub>w</sub>, also avoid including air. Exclusion of implants is not (yet) possible with this script.
 
 > :warning: This software and its results should not be used blindly without adequate professional judgment. Verify that the pixel-to-mm scaling is done correctly by checking the ROI area with the CT manufacturer's software. Read LICENSE for further disclaimers.
 
 ## Contents
   * [Requirements](#requirements)
   * [Standalone](#standalone)
-    + [Input](#input)
-    + [Output](#output)
-    + [Example](#example)
   * [Python function](#python-function)
-    + [Input](#input-1)
-    + [Returns](#returns)
-    + [Example](#example-1)
   * [More information](#more-information)
     + [Using SSDE factors](#using-ssde-factors)
     + [Sources / suggested reading](#sources--suggested-reading)
@@ -29,9 +31,11 @@ Modules `cv2` and `pydicom`:
 
     $ pip3 install opencv-python pydicom
 
-Download the file `DICOMwaterequivalent.py` and place it in your working directory. Alternatively, you can put it in one of the other directories that Python checks for modules. To list these directories:
+Download the file `DICOMwaterequivalent.py` and place it in your working directory. Alternatively, you can put it in one of the other directories that Python checks for modules. To list these directories: `$ python3 -c 'import sys; print(sys.path)'`
 
-    $ python3 -c 'import sys; print(sys.path)'
+On Linux and MacOS, you might need to make it executable:
+
+	$ chmod +x DICOMwaterequivalent.py
 
 ## Standalone
 You can call DICOMwaterequivalent.py from the command line:
@@ -48,20 +52,8 @@ You can call DICOMwaterequivalent.py from the command line:
 You need to specify both ww and wl, or neither.
 
 ### Output
-##### Console
-```
-roiArea: <ROI area in mm² (float)>
-roiEquivalentCircleDiameter: <ROI area-equivalent circle diameter in mm (float)>
-waterEquivalentArea: <water equivalent area Aw in mm² (float)>
-Aw: <same as waterEquivalentArea>
-waterEquivalentCircleDiameter: <water equivalent circle diameter Dw in mm (float)>
-Dw: <same as waterEquivalentCircleDiameter>
-hullArea: <ROI hull area in mm² (float)>
-hullEquivalentCircleDiameter: <ROI hull area-equivalent circle diameter in mm (float)>
-```
-
-##### Visual
-Image displaying ROI and ROI hull contours, overlaid with values mentioned above. Press any key to close.
+* Console: output values (float)
+* GUI: image with ROI and hull contours, overlaid with output values (int)
 
 ### Example
 
@@ -74,6 +66,7 @@ Image displaying ROI and ROI hull contours, overlaid with values mentioned above
 	Dw: 183.0908965654292
 	hullArea: 23966.764703619567
 	hullEquivalentCircleDiameter: 174.68666972614523
+	Press any key in the GUI to quit
 
 <img align="left" src="screenshot.png" />
 <br clear="all" />
@@ -95,19 +88,7 @@ $ python3
 * window:    (optional) view window for output image, as tuple (ww,wl). If omitted, no image will be outputted.
 
 ### Returns
-Dictionary containing:
-
-	{
-	 'roiArea': <ROI area in mm² (float)>,
-	 'roiEquivalentCircleDiameter': <ROI area-equivalent circle diameter in mm (float)>,
-	 'waterEquivalentArea': <water equivalent area Aw in mm² (float)>,
-	 'Aw': <same as waterEquivalentArea>,
-	 'waterEquivalentCircleDiameter': <water equivalent circle diameter Dw in mm (float)>,
-	 'Dw': <same as waterEquivalentCircleDiameter>,
-	 'hullArea': <ROI hull area in mm² (float)>,
-	 'hullEquivalentCircleDiameter': <ROI hull area-equivalent circle diameter in mm (float)>,
-	 'image': <image displaying ROI and ROI hull contours, overlaid with values mentioned above (numpy array)>
-	}
+Dictionary containing numerical values as float, image as numpy array.
 
 ### Example
 
@@ -148,3 +129,10 @@ Cheng PM. [Automated estimation of abdominal effective diameter for body size no
 ### Contact
 
 Any questions or comments? Mail me: caspar@verhey.net
+
+If you run into trouble, please mention:
+- OS;
+- python version;
+- whether you have the required libraries installed;
+- your command line arguments or python code (screenshots preferred);
+- if possible: one of the DICOM files you're trying to use.
