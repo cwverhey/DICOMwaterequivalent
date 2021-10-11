@@ -20,13 +20,14 @@ import cv2
 import numpy as np
 import math
 import pydicom
+from pydicom.pixel_data_handlers.util import apply_modality_lut
 
 def DICOMwaterequivalent(dicom_filename, threshold, window = False):
 
     # load DICOM image
     dicom_pydicom  = pydicom.read_file(dicom_filename)
     dicom_img = dicom_pydicom.pixel_array # dicom pixel values as 2D numpy pixel array
-    dicom_img = dicom_img - 1000.0 # remap scale 0:... to HU -1000:...
+    dicom_img = apply_modality_lut(dicom_img, dicom_pydicom) # applies DICOM tags (0028, 1052) Rescale Intercept and (0028, 1053) Rescale Slope
 
     # determine pixel area in mm²/px²
     scale = dicom_pydicom.PixelSpacing[0] * dicom_pydicom.PixelSpacing[1]
